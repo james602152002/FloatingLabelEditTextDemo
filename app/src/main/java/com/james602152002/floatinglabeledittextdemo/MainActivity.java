@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FloatingLabelEditText editText = findViewById(R.id.label_1);
         editText.addValidator(new RegexValidator("error", "\\d+"));
-        editText.addValidator(new RegexValidator("You input letters", "[A-Za-z]+$"));
+        editText.addValidator(new RegexValidator("You input letters.", "[A-Za-z]+$"));
 //        editText.setHint_text_color(Color.BLUE);
-        editText.setError("error");
+//        editText.setError("error");
     }
 }

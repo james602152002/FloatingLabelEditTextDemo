@@ -524,7 +524,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
         int w = View.MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         int h = View.MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         measure(w, h);
-        final int width = getMeasuredWidth();
+        final int width = getWidth() > 0 ? getWidth() : getMeasuredWidth();
         if (error_length > width) {
             error_percentage = 0;
             if (errorAnimator == null)

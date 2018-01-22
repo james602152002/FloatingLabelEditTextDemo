@@ -6,29 +6,43 @@
     android:layout_height="match_parent"
     tools:context="com.james602152002.floatinglabeledittextdemo.MainActivity">
 
-    <com.james602152002.floatinglabeledittext.FloatingLabelEditText
-        android:id="@+id/label_1"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="hint"
-        android:textColorHint="#FF0000"
-        app:j_fle_label_textSize="10sp"
-        android:textSize="20sp"
-        android:imeOptions="actionNext"
-        android:nextFocusForward="@+id/label_2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <EditText
-        android:id="@+id/label_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:imeOptions="actionDone"
-        app:layout_constraintHorizontal_bias="0.501"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/label_1" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="50dp">
+
+            <com.james602152002.floatinglabeledittext.FloatingLabelEditText
+                android:id="@+id/label_1"
+                style="@style/floating_label_style"
+                android:hint="label1"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/label_2" />
+
+            <com.james602152002.floatinglabeledittext.FloatingLabelEditText
+                android:id="@+id/label_2"
+                style="@style/floating_label_style"
+                android:hint="label2"
+                android:imeOptions="actionDone" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 
 </android.support.constraint.ConstraintLayout>
