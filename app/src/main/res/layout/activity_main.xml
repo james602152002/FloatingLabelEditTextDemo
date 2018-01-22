@@ -38,6 +38,27 @@
                 android:id="@+id/label_2"
                 style="@style/floating_label_style"
                 android:hint="label2"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/label_3" />
+
+            <com.james602152002.floatinglabeledittext.FloatingLabelEditText
+                android:id="@+id/label_3"
+                style="@style/floating_label_style"
+                android:hint="label3"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/label_4" />
+
+            <com.james602152002.floatinglabeledittext.FloatingLabelEditText
+                android:id="@+id/label_4"
+                style="@style/floating_label_style"
+                android:hint="label4"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/label_5" />
+
+            <com.james602152002.floatinglabeledittext.FloatingLabelEditText
+                android:id="@+id/label_5"
+                style="@style/floating_label_style"
+                android:hint="label5"
                 android:imeOptions="actionDone" />
 
         </LinearLayout>
