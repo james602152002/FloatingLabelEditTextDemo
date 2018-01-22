@@ -16,5 +16,6 @@
         <item name="j_fle_thickness">1px</item>
         <item name="j_fle_error_textSize">10sp</item>
         <item name="j_fle_label_textSize">10sp</item>
+        <item name="j_fle_error_disable">true</item>
     </style>
 </resources>
