@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="floating_label_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/blue</item>
+        <item name="android:textSize">14sp</item>
+        <item name="j_fle_thickness">1px</item>
+        <item name="j_fle_error_textSize">10sp</item>
+        <item name="j_fle_label_textSize">10sp</item>
+    </style>
 </resources>

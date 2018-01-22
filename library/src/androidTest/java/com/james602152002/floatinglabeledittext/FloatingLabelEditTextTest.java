@@ -2,6 +2,7 @@ package com.james602152002.floatinglabeledittext;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.support.annotation.VisibleForTesting;
 import android.test.AndroidTestCase;
 import android.view.View;
 
@@ -70,7 +71,7 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
         customView.dispatchDraw(canvas);
         customView.setError("error.............................................................");
         customView.dispatchDraw(canvas);
-        customView.setErrorMargin(10, 0);
+        customView.setErrorMargin(10);
         customView.dispatchDraw(canvas);
     }
 
@@ -114,7 +115,7 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
     @Test
     public void testMargins() {
         customView.setLabelMargins(10, 10);
-        customView.setErrorMargin(10, 10);
+        customView.setErrorMargin(10);
     }
 
     @Test
@@ -205,7 +206,7 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
         listener.onFocusChange(view, false);
     }
 
-    @Test
+    @VisibleForTesting
     public void testValidatorList() {
         customView.setValidatorList(null);
         assertNull(customView.getValidatorList());
@@ -218,6 +219,13 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
         customView.setValidatorList(data);
         assertEquals(customView.getValidatorList(), data);
         customView.setText("123");
+    }
+
+    @VisibleForTesting
+    public void testValidatorListOnNull() {
+        final List<RegexValidator> data = new ArrayList<>();
+        data.add(new RegexValidator("error", "\\d+"));
+        customView.setValidatorList(data);
         customView.setText("abc");
     }
 
@@ -227,6 +235,27 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
         RegexValidator regexValidator = new RegexValidator("msg", "regex");
         customView.addValidator(regexValidator);
         assertEquals(customView.getValidatorList().get(0), regexValidator);
+    }
+
+    @Test
+    public void testTextPartHeight() {
+        final int height = 10;
+        customView.setText_part_height(height);
+        assertEquals(customView.getText_part_height(), height);
+        customView.setTextSize(0, 0);
+        customView.setTextSize(0);
+    }
+
+    @Test
+    public void testErrorDisabled() {
+        customView.setError_disabled();
+        assertTrue(customView.isError_disabled());
+    }
+
+    @Test
+    public void testErrorEnabled() {
+        customView.setError_enabled();
+        assertFalse(customView.isError_disabled());
     }
 
     @After

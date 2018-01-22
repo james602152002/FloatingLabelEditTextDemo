@@ -70,6 +70,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
     private OnFocusChangeListener customizeListener;
     private boolean hasFocus = false;
     private List<RegexValidator> validatorList;
+    private boolean error_disabled = false;
 
     public FloatingLabelEditText(Context context) {
         super(context);
@@ -110,8 +111,9 @@ public class FloatingLabelEditText extends AppCompatEditText {
         error_horizontal_margin = (short) typedArray.getDimensionPixelOffset(R.styleable.FloatingLabelEditText_j_fle_error_horizontal_margin, 0);
         divider_vertical_margin = (short) typedArray.getDimensionPixelOffset(R.styleable.FloatingLabelEditText_j_fle_divider_vertical_margin, 0);
         highlight_color = typedArray.getColor(R.styleable.FloatingLabelEditText_j_fle_colorHighlight, primary_color);
-        setDivider_color(typedArray.getColor(R.styleable.FloatingLabelEditText_j_fle_colorDivider, Color.GRAY));
+        divider_color = typedArray.getColor(R.styleable.FloatingLabelEditText_j_fle_colorDivider, Color.GRAY);
         error_color = typedArray.getColor(R.styleable.FloatingLabelEditText_j_fle_colorError, Color.RED);
+        label = typedArray.getString(R.styleable.FloatingLabelEditText_j_fle_hint);
         divider_stroke_width = (short) typedArray.getDimensionPixelOffset(R.styleable.FloatingLabelEditText_j_fle_thickness, dp2px(2));
         label_text_size = typedArray.getDimensionPixelOffset(R.styleable.FloatingLabelEditText_j_fle_label_textSize, sp2Px(16));
         error_text_size = typedArray.getDimensionPixelOffset(R.styleable.FloatingLabelEditText_j_fle_error_textSize, sp2Px(16));
@@ -119,6 +121,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
         errorPaint.setTextSize(error_text_size);
         ANIM_DURATION = (short) typedArray.getInteger(R.styleable.FloatingLabelEditText_j_fle_float_anim_duration, 800);
         ERROR_ANIM_DURATION_PER_WIDTH = (short) typedArray.getInteger(R.styleable.FloatingLabelEditText_j_fle_error_anim_duration, 8000);
+        error_disabled = typedArray.getBoolean(R.styleable.FloatingLabelEditText_j_fle_error_disable, false);
 
         if (ANIM_DURATION < 0)
             ANIM_DURATION = 800;
@@ -136,7 +139,8 @@ public class FloatingLabelEditText extends AppCompatEditText {
         textTypedArray = null;
 
         TypedArray hintTypedArray = context.obtainStyledAttributes(attrs, new int[]{android.R.attr.hint});
-        label = hintTypedArray.getString(0);
+        if (TextUtils.isEmpty(label))
+            label = hintTypedArray.getString(0);
         hint_text_color = getCurrentHintTextColor();
         setHintTextColor(0);
         hintTypedArray.recycle();
@@ -269,7 +273,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
         this.padding_right = (short) right;
         this.padding_bottom = (short) bottom;
         super.setPadding(left, top + label_vertical_margin + (int) label_text_size, right,
-                bottom + divider_stroke_width + (int) (error_text_size *  1.2f) + (divider_vertical_margin * 3));
+                bottom + divider_stroke_width + divider_vertical_margin + (!error_disabled ? (int) (error_text_size * 1.2f) + (divider_vertical_margin << 1) : 0));
     }
 
     private void updatePadding() {
@@ -412,9 +416,8 @@ public class FloatingLabelEditText extends AppCompatEditText {
         return divider_stroke_width;
     }
 
-    public void setErrorMargin(int horizontal_margin, int vertical_margin) {
+    public void setErrorMargin(int horizontal_margin) {
         this.error_horizontal_margin = (short) horizontal_margin;
-        this.divider_vertical_margin = (short) vertical_margin;
         updatePadding();
     }
 
@@ -606,5 +609,19 @@ public class FloatingLabelEditText extends AppCompatEditText {
             validatorList = new ArrayList<>();
         if (validator != null)
             validatorList.add(validator);
+    }
+
+    public boolean isError_disabled() {
+        return error_disabled;
+    }
+
+    public void setError_disabled() {
+        this.error_disabled = true;
+        updatePadding();
+    }
+
+    public void setError_enabled() {
+        this.error_disabled= false;
+        updatePadding();
     }
 }
