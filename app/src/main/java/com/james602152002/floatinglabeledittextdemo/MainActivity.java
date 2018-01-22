@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FloatingLabelEditText editText = findViewById(R.id.label_1);
-        editText.addValidator(new RegexValidator("You input numbers", "\\d+"));
+        editText.addValidator(new RegexValidator("long error hint", "\\d+"));
         editText.addValidator(new RegexValidator("You input letters.", "[A-Za-z]+$"));
 //        editText.setHint_text_color(Color.BLUE);
 //        editText.setError("error");
