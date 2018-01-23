@@ -30,7 +30,7 @@
             <com.james602152002.floatinglabeledittext.FloatingLabelEditText
                 android:id="@+id/label_1"
                 style="@style/floating_label_style"
-                android:hint="label1"
+                android:hint="label1g"
                 android:imeOptions="actionNext"
                 android:nextFocusForward="@+id/label_2" />
 

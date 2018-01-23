@@ -141,6 +141,8 @@ public class FloatingLabelEditText extends AppCompatEditText {
         TypedArray hintTypedArray = context.obtainStyledAttributes(attrs, new int[]{android.R.attr.hint});
         if (TextUtils.isEmpty(label))
             label = hintTypedArray.getString(0);
+        else
+            setHint(label);
         hint_text_color = getCurrentHintTextColor();
         setHintTextColor(0);
         hintTypedArray.recycle();
@@ -300,7 +302,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
         if (label != null)
             drawSpannableString(canvas, label, labelPaint, scrollX + label_horizontal_margin, label_paint_dy);
 
-        final int divider_y = (int) (padding_top + label_text_size + text_part_height + divider_vertical_margin);
+        final int divider_y = (int) (padding_top + label_text_size + text_part_height + (divider_stroke_width >> 1) + divider_vertical_margin);
         if (!is_error) {
             dividerPaint.setColor(hasFocus ? highlight_color : divider_color);
         } else {
@@ -492,6 +494,9 @@ public class FloatingLabelEditText extends AppCompatEditText {
     }
 
     public void setError(CharSequence error) {
+        if (error_disabled) {
+            return;
+        }
         this.is_error = !TextUtils.isEmpty(error);
         this.error = error;
         if (is_error) {
@@ -621,7 +626,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
     }
 
     public void setError_enabled() {
-        this.error_disabled= false;
+        this.error_disabled = false;
         updatePadding();
     }
 }

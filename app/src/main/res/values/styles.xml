@@ -13,8 +13,13 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColorHint">@color/blue</item>
         <item name="android:textSize">14sp</item>
-        <item name="j_fle_thickness">1px</item>
+        <item name="j_fle_thickness">2dp</item>
         <item name="j_fle_error_textSize">10sp</item>
         <item name="j_fle_label_textSize">10sp</item>
+        <item name="j_fle_error_disable">true</item>
+        <item name="android:background">#99FF99</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="j_fle_colorDivider">#AA00FF</item>
+        <!--<item name="j_fle_divider_vertical_margin">0px</item>-->
     </style>
 </resources>
