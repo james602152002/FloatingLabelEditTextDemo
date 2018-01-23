@@ -18,8 +18,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         label_1 = findViewById(R.id.label_1);
         label_1.addValidator(new RegexValidator("long error hint", "\\d+"));
         label_1.addValidator(new RegexValidator("You input letters.", "[A-Za-z]+$"));
-//        label_1.setHint_text_color(Color.BLUE);
-//        label_1.setError("error");
         AppCompatButton button = findViewById(R.id.submit);
         button.setOnClickListener(this);
     }
