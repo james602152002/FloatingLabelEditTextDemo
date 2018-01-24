@@ -57,7 +57,6 @@ public class FloatingLabelEditText extends AppCompatEditText {
     private CharSequence label;
     private short padding_left, padding_top, padding_right, padding_bottom;
     private short text_part_height = -1;
-    private boolean text_part_height_set = false;
 
     private float label_text_size;
     private float hint_text_size;
@@ -75,9 +74,13 @@ public class FloatingLabelEditText extends AppCompatEditText {
     private List<RegexValidator> validatorList;
     private boolean error_disabled = false;
 
-    private TextPaint leftIconFontPaint;
-    private String leftIconUnitCode;
-    private int leftIconFontColor;
+    private Paint clearButtonPaint;
+    private short clear_button_size;
+    private String uni_code;
+    private int clear_btn_color;
+    private boolean enable_clear_btn = false;
+
+    private boolean multiline_mode = false;
 
     public FloatingLabelEditText(Context context) {
         super(context);
@@ -129,6 +132,9 @@ public class FloatingLabelEditText extends AppCompatEditText {
         ANIM_DURATION = (short) typedArray.getInteger(R.styleable.FloatingLabelEditText_j_fle_float_anim_duration, 800);
         ERROR_ANIM_DURATION_PER_WIDTH = (short) typedArray.getInteger(R.styleable.FloatingLabelEditText_j_fle_error_anim_duration, 8000);
         error_disabled = typedArray.getBoolean(R.styleable.FloatingLabelEditText_j_fle_error_disable, false);
+        multiline_mode = typedArray.getBoolean(R.styleable.FloatingLabelEditText_j_fle_multiline_mode_enable, false);
+        enable_clear_btn = typedArray.getBoolean(R.styleable.FloatingLabelEditText_j_fle_enable_clear_btn, false);
+        clear_btn_color = typedArray.getColor(R.styleable.FloatingLabelEditText_j_fle_clear_btn_color, 0xAA000000);
 
         if (ANIM_DURATION < 0)
             ANIM_DURATION = 800;
@@ -164,6 +170,8 @@ public class FloatingLabelEditText extends AppCompatEditText {
         backgroundTypedArray.recycle();
         backgroundTypedArray = null;
 
+        clear_button_size = (short) typedArray.getDimensionPixelOffset(R.styleable.FloatingLabelEditText_j_fle_clear_btn_size, (int) getTextSize());
+
         typedArray.recycle();
         typedArray = null;
 
@@ -179,11 +187,14 @@ public class FloatingLabelEditText extends AppCompatEditText {
         }
         paddingArray.recycle();
         paddingArray = null;
-        updatePadding();
         setIncludeFontPadding(false);
         initFocusChangeListener();
         setSingleLine();
         initTextWatcher();
+        if (enable_clear_btn) {
+            enableClearBtn(enable_clear_btn);
+        }
+        updatePadding();
     }
 
     private void initFocusChangeListener() {
@@ -281,8 +292,12 @@ public class FloatingLabelEditText extends AppCompatEditText {
         this.padding_top = (short) top;
         this.padding_right = (short) right;
         this.padding_bottom = (short) bottom;
-        super.setPadding(left, top + label_vertical_margin + (int) label_text_size, right,
+        super.setPadding(left, top + label_vertical_margin + (int) label_text_size, right + getClearBtnModeRightPadding(),
                 bottom + divider_stroke_width + divider_vertical_margin + (!error_disabled ? (int) (error_text_size * 1.2f) + (divider_vertical_margin << 1) : 0));
+    }
+
+    private int getClearBtnModeRightPadding() {
+        return (enable_clear_btn ? clear_button_size : 0);
     }
 
     private void updatePadding() {
@@ -337,7 +352,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
             }
         }
         canvas.drawLine(scrollX, divider_y, getWidth() + scrollX, divider_y, dividerPaint);
-        drawLeftIconFont(canvas);
+        drawLeftIconFont(canvas, scrollX);
     }
 
     private void drawSpannableString(final Canvas canvas, CharSequence hint, final TextPaint paint, final int start_x, final int start_y) {
@@ -347,7 +362,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
         float xEnd;
 
         if (paint != errorPaint)
-            hint = TextUtils.ellipsize(hint, paint, getWidth() - padding_left - padding_right - label_horizontal_margin, TextUtils.TruncateAt.END);
+            hint = TextUtils.ellipsize(hint, paint, getWidth() - padding_left - padding_right - label_horizontal_margin - getClearBtnModeRightPadding(), TextUtils.TruncateAt.END);
 
         if (hint instanceof SpannableString) {
             SpannableString spannableString = (SpannableString) hint;
@@ -385,14 +400,15 @@ public class FloatingLabelEditText extends AppCompatEditText {
         }
     }
 
-    private void drawLeftIconFont(final Canvas canvas) {
-        if (leftIconFontPaint != null) {
-            leftIconFontPaint.setColor(leftIconFontColor);
-            leftIconFontPaint.setAlpha((int) (255 * float_label_anim_percentage));
-            String spanned = Html.fromHtml(leftIconUnitCode).toString();
+    private void drawLeftIconFont(final Canvas canvas, final int scrollX) {
+        if (enable_clear_btn) {
+            clearButtonPaint.setColor(clear_btn_color);
+            clearButtonPaint.setAlpha((int) (255 * float_label_anim_percentage));
+            String spanned = Html.fromHtml(uni_code).toString();
             Rect bounds = new Rect();
-            leftIconFontPaint.getTextBounds(spanned, 0, spanned.length(), bounds);
-            canvas.drawText(spanned, 0, padding_top + label_text_size + ((label_vertical_margin + bounds.height() + text_part_height + divider_vertical_margin) >> 1), leftIconFontPaint);
+            clearButtonPaint.getTextBounds(spanned, 0, spanned.length(), bounds);
+            canvas.drawText(spanned, getWidth() - padding_right + scrollX - bounds.width(),
+                    padding_top + label_text_size + ((label_vertical_margin + bounds.height() + text_part_height + divider_vertical_margin) >> 1), clearButtonPaint);
         }
     }
 
@@ -581,8 +597,7 @@ public class FloatingLabelEditText extends AppCompatEditText {
     @Override
     public void setTextSize(float size) {
         hint_text_size = size;
-        if (!text_part_height_set)
-            text_part_height = (short) (Math.round(hint_text_size) * 1.2f);
+        text_part_height = (short) (Math.round(hint_text_size) * 1.2f);
         super.setTextSize(size);
     }
 
@@ -591,18 +606,8 @@ public class FloatingLabelEditText extends AppCompatEditText {
         Context c = getContext();
         Resources r = c.getResources();
         hint_text_size = TypedValue.applyDimension(unit, size, r.getDisplayMetrics());
-        if (!text_part_height_set)
-            text_part_height = (short) (Math.round(hint_text_size) * 1.2f);
+        text_part_height = (short) (Math.round(hint_text_size) * 1.2f);
         super.setTextSize(unit, size);
-    }
-
-    public void setText_part_height(int text_part_height) {
-        text_part_height_set = true;
-        this.text_part_height = (short) text_part_height;
-    }
-
-    public int getText_part_height() {
-        return text_part_height;
     }
 
     public int getDivider_color() {
@@ -648,15 +653,47 @@ public class FloatingLabelEditText extends AppCompatEditText {
         updatePadding();
     }
 
-    public void setLeftIconFont(Typeface typeface, String unit_code, int color) {
-        if (leftIconFontPaint == null) {
-            leftIconFontPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    public void enableClearBtn(boolean enable) {
+        enable_clear_btn = enable;
+        if (enable) {
+            initClearBtn();
+            clearButtonPaint.setTextSize(clear_button_size);
+            Typeface tf = Typeface.createFromAsset(getResources().getAssets(), "floating_label_edit_text_iconfont.ttf");
+            clearButtonPaint.setTypeface(tf);
+            clearButtonPaint.setColor(clear_btn_color);
+            uni_code = "&#xe724;";
+        } else {
+            clearButtonPaint = null;
         }
-        leftIconFontPaint.setTextSize(dp2px(10));
+        updatePadding();
+    }
+
+    public void customizeClearBtn(Typeface typeface, String uni_code, int color, int clear_btn_size) {
+        enable_clear_btn = true;
+        initClearBtn();
+        clearButtonPaint.setTextSize(dp2px(10));
         Typeface tf = Typeface.createFromAsset(getResources().getAssets(), "floating_label_edit_text_iconfont.ttf");
-        leftIconFontPaint.setTypeface(tf);
-        leftIconFontPaint.setColor(color);
-        this.leftIconUnitCode = unit_code;
-        this.leftIconFontColor = color;
+        clearButtonPaint.setTypeface(tf);
+        clearButtonPaint.setColor(color);
+        this.uni_code = uni_code;
+        this.clear_btn_color = color;
+    }
+
+    private final void initClearBtn() {
+        if (clearButtonPaint == null) {
+            clearButtonPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        }
+    }
+
+    @Override
+    public void setSingleLine() {
+        if (multiline_mode)
+            return;
+        super.setSingleLine();
+    }
+
+    public final void setMultiline_mode(boolean enable) {
+        this.multiline_mode = enable;
+        setSingleLine(!enable);
     }
 }

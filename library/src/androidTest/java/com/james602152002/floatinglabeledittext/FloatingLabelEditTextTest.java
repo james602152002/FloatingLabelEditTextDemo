@@ -238,15 +238,6 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
     }
 
     @Test
-    public void testTextPartHeight() {
-        final int height = 10;
-        customView.setText_part_height(height);
-        assertEquals(customView.getText_part_height(), height);
-        customView.setTextSize(0, 0);
-        customView.setTextSize(0);
-    }
-
-    @Test
     public void testErrorDisabled() {
         customView.setError_disabled();
         assertTrue(customView.isError_disabled());
@@ -256,6 +247,28 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
     public void testErrorEnabled() {
         customView.setError_enabled();
         assertFalse(customView.isError_disabled());
+    }
+
+    @Test
+    public void testEnableClearBtn() throws NoSuchFieldException, IllegalAccessException {
+        Field field = FloatingLabelEditText.class.getDeclaredField("clearButtonPaint");
+        field.setAccessible(true);
+        customView.enableClearBtn(true);
+        assertNotNull(field.get(customView));
+        customView.enableClearBtn(true);
+        customView.enableClearBtn(false);
+        assertNull(field.get(customView));
+    }
+
+    @Test
+    public void testSingleLine() throws IllegalAccessException, NoSuchFieldException {
+        customView.setSingleLine();
+        customView.setMultiline_mode(true);
+        customView.setSingleLine();
+        Field field = FloatingLabelEditText.class.getDeclaredField("multiline_mode");
+        field.setAccessible(true);
+        assertTrue((boolean) field.get(customView));
+        customView.setMultiline_mode(false);
     }
 
     @After
