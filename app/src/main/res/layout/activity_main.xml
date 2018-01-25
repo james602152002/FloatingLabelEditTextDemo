@@ -39,7 +39,8 @@
                 style="@style/floating_label_style"
                 android:hint="label2"
                 android:imeOptions="actionNext"
-                android:nextFocusForward="@+id/label_3" />
+                android:nextFocusForward="@+id/label_3"
+                app:j_fle_enable_clear_btn="true" />
 
             <com.james602152002.floatinglabeledittext.FloatingLabelEditText
                 android:id="@+id/label_3"
