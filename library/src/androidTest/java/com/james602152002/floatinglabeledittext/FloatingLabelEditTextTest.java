@@ -265,6 +265,11 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
     }
 
     @Test
+    public void testCustomizeClearBtn() {
+        customView.customizeClearBtn(null, null, Color.RED, 10);
+    }
+
+    @Test
     public void testSingleLine() throws IllegalAccessException, NoSuchFieldException {
         customView.setSingleLine();
         customView.setMultiline_mode(true);
@@ -280,6 +285,20 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
         final int margin = 20;
         customView.setClear_btn_horizontal_margin(margin);
         assertEquals(margin, customView.getClear_btn_horizontal_margin());
+    }
+
+    @Test
+    public void testClearBtnColor() {
+        final int color = Color.BLUE;
+        customView.setClear_btn_color(color);
+        assertEquals(customView.getClear_btn_color(), color);
+    }
+
+    @Test
+    public void testClearBtnSize() {
+        final int size = 100;
+        customView.setClear_btn_size(size);
+        assertEquals(size, customView.getClear_btn_size());
     }
 
     @Test
@@ -360,11 +379,11 @@ public class FloatingLabelEditTextTest extends AndroidTestCase {
 
     @Test
     public void testScaleRatio() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        Method method = FloatingLabelEditText.class.getDeclaredMethod("setScale_ratio", float.class);
+        Method method = FloatingLabelEditText.class.getDeclaredMethod("setClear_paint_alpha_ratio", float.class);
         method.setAccessible(true);
         final float scale_ratio = 3.14f;
         method.invoke(customView, scale_ratio);
-        Field field = FloatingLabelEditText.class.getDeclaredField("scale_ratio");
+        Field field = FloatingLabelEditText.class.getDeclaredField("clear_paint_alpha_ratio");
         field.setAccessible(true);
         assertEquals(scale_ratio, field.get(customView));
     }

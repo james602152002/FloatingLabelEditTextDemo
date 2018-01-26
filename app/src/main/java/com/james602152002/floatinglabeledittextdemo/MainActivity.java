@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         label_1.addValidator(new RegexValidator("long error hint", "\\d+"));
         label_1.addValidator(new RegexValidator("You input letters.", "[A-Za-z]+$"));
         label_1.enableClearBtn(true);
-//        label_1.setLeftIconFont(null, "&#xe724;", 0xFF000000);
         AppCompatButton button = findViewById(R.id.submit);
         button.setOnClickListener(this);
     }
