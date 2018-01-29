@@ -60,6 +60,7 @@
                 android:id="@+id/label_5"
                 style="@style/floating_label_style"
                 android:hint="label5"
+                app:j_fle_clear_btn_id="@drawable/ic_launcher_background"
                 android:imeOptions="actionDone" />
 
             <android.support.v7.widget.AppCompatButton

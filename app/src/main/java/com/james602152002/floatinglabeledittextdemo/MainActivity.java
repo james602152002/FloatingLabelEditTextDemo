@@ -1,5 +1,7 @@
 package com.james602152002.floatinglabeledittextdemo;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -18,9 +20,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         label_1 = findViewById(R.id.label_1);
         label_1.addValidator(new RegexValidator("long error hint", "\\d+"));
         label_1.addValidator(new RegexValidator("You input letters.", "[A-Za-z]+$"));
-        label_1.enableClearBtn(true);
+        label_1.customizeClearBtn(Typeface.createFromAsset(getAssets(), "iconfont.ttf"), "&#xe86d;", Color.GREEN, dp2px(10));
         AppCompatButton button = findViewById(R.id.submit);
         button.setOnClickListener(this);
+
+        //png bitmap clear button label
+        FloatingLabelEditText label3 = findViewById(R.id.label_3);
+        label3.customizeClearBtn(R.drawable.umeng_socialize_qq_on, dp2px(12));
+
+        //vector drawable clear button label
+        FloatingLabelEditText label4 = findViewById(R.id.label_4);
+        label4.customizeClearBtn(R.drawable.ic_wifi_black_24dp, dp2px(12));
+    }
+
+    private int dp2px(float dpValue) {
+        return (int) (0.5f + dpValue * getResources().getDisplayMetrics().density);
     }
 
     @Override
