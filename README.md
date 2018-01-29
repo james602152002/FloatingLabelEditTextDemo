@@ -119,6 +119,7 @@
     //Even your edit text doesn't have focus, your clear button still show at right.
     showClearButtonWithoutFocus();
  }
+```
 
 ## Demonstration
 
