@@ -19,6 +19,7 @@
         <item name="android:layout_marginTop">2dp</item>
         <item name="j_fle_colorDivider">#AA00FF</item>
         <item name="j_fle_show_clear_btn_without_focus">true</item>
+        <item name="j_fle_show_text_length">true</item>
         <!--<item name="android:background">#55FFFF</item>-->
         <!--<item name="j_fle_divider_vertical_margin">5dp</item>-->
         <!--<item name="j_fle_label_vertical_margin">5dp</item>-->

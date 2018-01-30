@@ -18,13 +18,13 @@
  
  ```
  dependencies {
- 	compile 'com.github.james602152002:FloatingLabelEditText:1.2.0'
+ 	compile 'com.github.james602152002:FloatingLabelEditText:1.3.1'
  }
  ```
  
  ## Property
  ```xml
- <com.james602152002.floatinglabeledittext.FloatingLabelEditText
+<com.james602152002.floatinglabeledittext.FloatingLabelEditText
            //set focus status color
            app:j_fle_colorHighlight="#0000FF" 
            //set divider color when you are not in focus status
@@ -67,58 +67,66 @@
            app:j_fle_clear_btn_id = "@drawable/icon"
            //Even your edit text doesn't have focus, your clear button still show at right.(default invisible)
            app:j_fle_show_clear_btn_without_focus="true"
+           //display your current and max text length(default invisible)
+           app:j_fle_show_text_length="true"
+           //set text length display color(default highlight_color)
+           app:j_fle_text_length_display_color="#00FFFF"
            />
            
  ```
  
  ## Method
  ```java
- public void setting(){
-    //set focus status color
-    setHighlightColor(int color);
-    //set divider color when you are not in focus status
-    setDivider_color(int divider_color);
-    //set error status color
-    setError_color(int error_color);
-    //set label text and hint
-    setLabel(CharSequence hint);
-    //set thickness of divider
-    setThickness(int thickness);
-    //set label horizontal and vertical margin
-    setLabelMargins(int horizontal_margin, int vertical_margin);
-    //ser error text horizontal margin
-    setErrorMargin(int horizontal_margin);
-    //set divider vertical margin
-    setDivider_vertical_margin(int divider_vertical_margin);
-    //set floating label text size
-    setLabel_text_size(float label_text_size);
-    //set error text size
-    setError_text_size(float error_text_size);
-    //set floating label animation duration(unit：ms)
-    setAnimDuration(int ANIM_DURATION);
-    //set error sliding text animation duration(unit：ms)
-    setErrorAnimDuration(int ERROR_ANIM_DURATION);
-    //enable error mode
-    setError_enabled();
-    //disable error mode
-    setError_disabled();
-    //enable multiline mode(default disabled)
-    setMultiline_mode(boolean enable);
-    //enable clear button mode(default disabled)
-    enableClearBtn(boolean enable);
-    //set clear button size
-    setClear_btn_size(int clear_btn_size);
-    //set clear button color
-    setClear_btn_color(int clear_btn_color);
-    //set clear button horizontal margin
-    setClear_btn_horizontal_margin(int clear_btn_horizontal_margin);
-    //customize your clear button by ttf
-    customizeClearBtn(Typeface typeface, String uni_code, int color, int clear_btn_size);
-    //customize png or VectorDrawable clear button
-    customizeClearBtn(int drawableId, int clear_btn_width);
-    //Even your edit text doesn't have focus, your clear button still show at right.
-    showClearButtonWithoutFocus();
- }
+  public void setting(){
+     //set focus status color
+     setHighlightColor(int color);
+     //set divider color when you are not in focus status
+     setDivider_color(int divider_color);
+     //set error status color
+     setError_color(int error_color);
+     //set label text and hint
+     setLabel(CharSequence hint);
+     //set thickness of divider
+     setThickness(int thickness);
+     //set label horizontal and vertical margin
+     setLabelMargins(int horizontal_margin, int vertical_margin);
+     //ser error text horizontal margin
+     setErrorMargin(int horizontal_margin);
+     //set divider vertical margin
+     setDivider_vertical_margin(int divider_vertical_margin);
+     //set floating label text size
+     setLabel_text_size(float label_text_size);
+     //set error text size
+     setError_text_size(float error_text_size);
+     //set floating label animation duration(unit：ms)
+     setAnimDuration(int ANIM_DURATION);
+     //set error sliding text animation duration(unit：ms)
+     setErrorAnimDuration(int ERROR_ANIM_DURATION);
+     //enable error mode
+     setError_enabled();
+     //disable error mode
+     setError_disabled();
+     //enable multiline mode(default disabled)
+     setMultiline_mode(boolean enable);
+     //enable clear button mode(default disabled)
+     enableClearBtn(boolean enable);
+     //set clear button size
+     setClear_btn_size(int clear_btn_size);
+     //set clear button color
+     setClear_btn_color(int clear_btn_color);
+     //set clear button horizontal margin
+     setClear_btn_horizontal_margin(int clear_btn_horizontal_margin);
+     //customize your clear button by ttf
+     customizeClearBtn(Typeface typeface, String uni_code, int color, int clear_btn_size);
+     //customize png or VectorDrawable clear button
+     customizeClearBtn(int drawableId, int clear_btn_width);
+     //Even your edit text doesn't have focus, your clear button still show at right.
+     showClearButtonWithoutFocus();
+     //display your current and max text length(default invisible)
+     showMaxTextLength(boolean show);
+     //set text length display color(default highlight_color)
+     setText_length_display_color(int text_length_display_color);
+  }
 ```
 
 ## Demonstration

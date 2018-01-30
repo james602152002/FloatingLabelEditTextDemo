@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.text.InputFilter;
 import android.view.View;
 
 import com.james602152002.floatinglabeledittext.FloatingLabelEditText;
@@ -18,11 +19,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         label_1 = findViewById(R.id.label_1);
-        label_1.addValidator(new RegexValidator("long error hint", "\\d+"));
+        label_1.addValidator(new RegexValidator("long error hint......................................................................end", "\\d+"));
         label_1.addValidator(new RegexValidator("You input letters.", "[A-Za-z]+$"));
         label_1.customizeClearBtn(Typeface.createFromAsset(getAssets(), "iconfont.ttf"), "&#xe86d;", Color.GREEN, dp2px(10));
         AppCompatButton button = findViewById(R.id.submit);
         button.setOnClickListener(this);
+
+        //png bitmap clear button label
+        FloatingLabelEditText label2 = findViewById(R.id.label_2);
+        label2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+        label2.addValidator(
+                new RegexValidator("long error message long error message long error message long error message long error message ",
+                        "\\d+"));
 
         //png bitmap clear button label
         FloatingLabelEditText label3 = findViewById(R.id.label_3);

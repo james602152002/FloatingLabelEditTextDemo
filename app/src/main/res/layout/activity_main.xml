@@ -32,6 +32,8 @@
                 style="@style/floating_label_style"
                 android:hint="label1"
                 android:imeOptions="actionNext"
+                android:maxLength="5"
+                app:j_fle_text_length_display_color="#FFAAAA"
                 android:nextFocusForward="@+id/label_2" />
 
             <com.james602152002.floatinglabeledittext.FloatingLabelEditText
@@ -60,8 +62,8 @@
                 android:id="@+id/label_5"
                 style="@style/floating_label_style"
                 android:hint="label5"
-                app:j_fle_clear_btn_id="@drawable/ic_launcher_background"
-                android:imeOptions="actionDone" />
+                android:imeOptions="actionDone"
+                app:j_fle_clear_btn_id="@drawable/ic_launcher_background" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/submit"
