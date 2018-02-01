@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.text.InputFilter;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import com.james602152002.floatinglabeledittext.FloatingLabelEditText;
@@ -19,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         label_1 = findViewById(R.id.label_1);
+        SpannableString span = new SpannableString("label 1 with star *");
+        span.setSpan(new ForegroundColorSpan(Color.RED), span.length() -1, span.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        label_1.setLabel(span);
         label_1.addValidator(new RegexValidator("long error hint......................................................................end", "\\d+"));
         label_1.addValidator(new RegexValidator("You input letters.", "[A-Za-z]+$"));
         label_1.customizeClearBtn(Typeface.createFromAsset(getAssets(), "iconfont.ttf"), "&#xe86d;", Color.GREEN, dp2px(10));
